@@ -22,11 +22,13 @@ ActiveRecord::Schema.define(version: 2020_05_14_110816) do
   end
 
   create_table "doses", force: :cascade do |t|
-    t.string "references"
-    t.string "ingredient"
     t.string "description"
+    t.bigint "ingredient_id"
+    t.bigint "cocktail_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["cocktail_id"], name: "index_doses_on_cocktail_id"
+    t.index ["ingredient_id"], name: "index_doses_on_ingredient_id"
   end
 
   create_table "ingredients", force: :cascade do |t|
@@ -35,4 +37,6 @@ ActiveRecord::Schema.define(version: 2020_05_14_110816) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "doses", "cocktails"
+  add_foreign_key "doses", "ingredients"
 end
